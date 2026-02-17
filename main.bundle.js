@@ -42188,13 +42188,17 @@
             kickPlayer(e) {
                 const t = (0,
                 R.gn)(this, vn, "f").find((t => t.id == e));
-                if (null != t)
-                    t.dataChannel.send(new Uint8Array([Zt.Kick])),
+                if (null != t) {
+                    try {
+                        "open" === t.dataChannel.readyState && t.dataChannel.send(new Uint8Array([Zt.Kick]))
+                    } catch {}
                     setTimeout(( () => {
-                        t.dataChannel.close()
+                        try {
+                            t.dataChannel.close()
+                        } catch {}
                     }
-                    ), 1e3);
-                else {
+                    ), 1e3)
+                } else {
                     const t = (0,
                     R.gn)(this, An, "f").find((t => t.id == e));
                     null != t && ((0,
